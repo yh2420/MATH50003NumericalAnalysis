@@ -56,6 +56,7 @@ with respect to a prescribed weight—and their usage in numerical computations.
 
 1. [Week 1](https://nbviewer.org/github/dlfivefifty/MATH50003NumericalAnalysis/blob/main/sheets/week1.ipynb) ([Solutions](https://github.com/Imperial-MATH50003/MATH50003NumericalAnalysis/blob/main/sheets/week1s.ipynb)): Binary representation, integers, floating point numbers, and interval arithmetic
 1. [Week 2](https://nbviewer.org/github/dlfivefifty/MATH50003NumericalAnalysis/blob/main/sheets/week2.ipynb): Finite-differences, dual numbers, and Newton iteration
+1. [Week 3](https://nbviewer.org/github/dlfivefifty/MATH50003NumericalAnalysis/blob/main/sheets/week3.ipynb): dense, triangular, banded, permutation, and rotation matrices
 
 
 ## Reading List
@@ -66,6 +67,13 @@ with respect to a prescribed weight—and their usage in numerical computations.
 4. [The Julia Documentation](https://docs.julialang.org)
 5. [The Julia–Matlab–Python Cheatsheet](https://cheatsheets.quantecon.org)
 
+
+## Notes from lectures
+
+1. [Integers](lectures/Integers.png)
+2. [Floating Point Numbers](lectures/FloatingPoint.jpg)
+3. [Floating Point Arithmetic](lectures/Arithmetic.jpg)
+4. [Bounding Errors in Rounding](lectures/Rounding.jpg)
 
 ## What is numerical analysis? 
 
