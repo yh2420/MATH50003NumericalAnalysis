@@ -1,4 +1,4 @@
-# MATH50003 Numerical Analysis: Problem Sheet 4
+# MATH50003 Numerical Analysis: Problem Sheet 5
 
 This problem sheet explores positive definite matrices,
 Cholesky decompositions, matrix norms, and the singular value decomposition.
@@ -36,3 +36,94 @@ $$
 $$
 Deduce its two Cholesky decompositions: $Δ_n = L_n L_n^⊤ = U_n U_n^⊤$ where
 $L_n$ is lower triangular and $U_n$ is upper triangular.
+
+**Problem 1.4** `SymTridiagonal(dv, eu)` is a type for representing symmetric tridiagonal
+matrices (that is, `SymTridiagonal(dv, ev) == Tridiagonal(ev, dv, ev)`). Complete the following
+implementation of `cholesky` to return a `Bidiagonal` cholesky factor in $O(n)$ operations, 
+and check your result
+compared to your solution of Problem 1.3 for `n = 1_000_000`.
+```julia
+using LinearAlgebra
+import LinearAlgebra: cholesky
+
+# return a Bidiagonal L such that L'L == A (up to machine precision)
+cholesky(A::SymTridiagonal) = cholesky!(copy(A))
+
+# return a Bidiagonal L such that L'L == A (up to machine precision)
+# You are allowed to change A
+function cholesky!(A::SymTridiagonal)
+    d = A.dv # diagonal entries of A
+    u = A.ev # sub/super-diagonal entries of A
+    T = float(eltype(A)) # return type, make float in case A has Ints
+    n = length(d)
+    ld = zeros(T, n) # diagonal entries of L
+    ll = zeros(T, n-1) # sub-diagonal entries of L
+
+    # TODO: populate ld and ll
+
+    Bidiagonal(ld, l, :L)
+end
+```
+
+
+
+## 2. Matrix norms
+
+**Problem 2.1⋆** Prove the following:
+$$
+\begin{align*}
+\|A\|_∞ &= \max_k \|A[k,:]\|_1 \\
+\|A\|_{1 → ∞} &= \|\hbox{vec}(A)\|_∞ = \max_{kj} |a_{kj}|
+\end{align*}
+$$
+
+**Problem 2.2⋆** For a rank-1 matrix $A = 𝐱 𝐲^⊤$ prove that
+$$
+\|A \|_2 = \|𝐱\|_2 \|𝐲\|_2.
+$$
+
+**Problem 2.3⋆** Show for any orthogonal matrix $Q ∈ ℝ^m$ and
+matrix $A ∈ ℝ^{m × n}$ that
+$$
+\|Q A\|_F = \|A\|_F
+$$
+by first showing that $\|A \|_F = \sqrt{\hbox{tr}(A^⊤ A)}$ using the
+_trace_ of an $m × m$ matrix:
+$$
+\hbox{tr}(A) = a_{11} + a_{22} + ⋯ + a_{mm}.
+$$
+
+
+## 3. Singular value decomposition
+
+**Problem 3.1⋆** Show that $\|A \|_2 ≤ \|A\|_F ≤ \sqrt{r} \|A \|_2$ where
+$r$ is the rank of $A$.
+
+**Problem 3.2** Consider functions sampled on a $(n+1) × (n+1)$ 2D grid 
+$(x_k,y_j) = (k/n, j/n)$ where $k,j = 0,…,n$. 
+For $n = 100$, what is the lowest rank $r$ such that
+the  best rank-$r$ approximation to the samples 
+that is accurate to within $10^{-5}$ accuracy for the following functions:
+$$
+(x + 2y)^2, \cos(\sin x \E^y), 1/(x + y + 1), $\sign(x-y)$
+$$
+For which examples does the answer change when $n = 1000$?
+
+**SOLUTION**
+
+```julia
+n = 100
+x = y = range(0, 1; length=n)
+
+f = (x,y) -> (x + 2y)^2
+g = (x,y) -> cos(sin(x)exp(y))
+h = (x,y) -> 1/(x + y + 1)
+s = (x,y) -> sign(x-y)
+
+svdvals(f.(x, y')) # rank 3
+svdvals(g.(x, y')) # rank 5
+svdvals(h.(x, y')) # rank 4
+svdvals(s.(x, y')) # rank n
+```
+
+**END**
